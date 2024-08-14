@@ -1,0 +1,39 @@
+{
+  "resultDetails": {
+    "Symbol No.": "21535212",
+    "Result": "Passed",
+    "GPA": "4"
+  },
+  "gradeSheet": [
+    {
+      "No": "1",
+      "Subject": "Computer Architecture",
+      "Marks": "40",
+      "Grade": "B-"
+    },
+    {
+      "No": "2",
+      "Subject": "Web Technology I",
+      "Marks": "45",
+      "Grade": "B-"
+    },
+    {
+      "No": "3",
+      "Subject": "Mathematical Foundation for Computer Science",
+      "Marks": "45",
+      "Grade": "B-"
+    },
+    {
+      "No": "4",
+      "Subject": "Software Engineering",
+      "Marks": "46",
+      "Grade": "B-"
+    },
+    {
+      "No": "5",
+      "Subject": "Java Programming",
+      "Marks": "42",
+      "Grade": "B-"
+    }
+  ]
+}
