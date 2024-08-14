@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Files Display</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>JSON Files Display</h1>
+    <div id="tablesContainer"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchAndDisplayJSONFiles();
+      });
+
+      function fetchAndDisplayJSONFiles() {
+        const baseUrl =
+          "https://raw.githubusercontent.com/ammard3v/result1/main/result_data";
+        const totalFiles = 31; // Total number of JSON files (from 0 to 30)
+
+        for (let i = 0; i < totalFiles; i++) {
+          const fileUrl = `${baseUrl}(${i}).json`;
+
+          fetch(fileUrl)
+            .then((response) => {
+              if (!response.ok) throw new Error("File not found");
+              return response.json();
+            })
+            .then((data) => {
+              displayResultDetails(data.resultDetails, i);
+              displayGradeSheet(data.gradeSheet, i);
+            })
+            .catch((error) => {
+              console.error(
+                `Error loading file result_data(${i}).json:`,
+                error
+              );
+            });
+        }
+      }
+
+      function displayResultDetails(resultDetails, index) {
+        const tableContainer = document.getElementById("tablesContainer");
+        const table = document.createElement("table");
+        table.innerHTML = `<caption>Result Details for File ${index}</caption>`;
+
+        const headers = Object.keys(resultDetails);
+        const headerRow = document.createElement("tr");
+        headers.forEach((header) => {
+          const th = document.createElement("th");
+          th.textContent = header;
+          headerRow.appendChild(th);
+        });
+        table.appendChild(headerRow);
+
+        const row = document.createElement("tr");
+        headers.forEach((header) => {
+          const td = document.createElement("td");
+          td.textContent = resultDetails[header];
+          row.appendChild(td);
+        });
+        table.appendChild(row);
+
+        tableContainer.appendChild(table);
+      }
+
+      function displayGradeSheet(gradeSheet, index) {
+        if (Array.isArray(gradeSheet) && gradeSheet.length > 0) {
+          const tableContainer = document.getElementById("tablesContainer");
+          const table = document.createElement("table");
+          table.innerHTML = `<caption>Grade Sheet for File ${index}</caption>`;
+
+          const headers = Object.keys(gradeSheet[0]);
+          const headerRow = document.createElement("tr");
+          headers.forEach((header) => {
+            const th = document.createElement("th");
+            th.textContent = header;
+            headerRow.appendChild(th);
+          });
+          table.appendChild(headerRow);
+
+          gradeSheet.forEach((item) => {
+            const row = document.createElement("tr");
+            headers.forEach((header) => {
+              const td = document.createElement("td");
+              td.textContent = item[header] !== undefined ? item[header] : "";
+              row.appendChild(td);
+            });
+            table.appendChild(row);
+          });
+
+          tableContainer.appendChild(table);
+        } else {
+          console.error("Grade sheet is empty or not in expected format.");
+        }
+      }
+    </script>
+  </body>
+</html>
